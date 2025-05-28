@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
-import { CameraView, Camera } from "expo-camera";
+import { Camera, CameraView } from "expo-camera";
+import React, { useEffect, useState } from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
 
 export default function QRScanner() {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
@@ -15,7 +15,13 @@ export default function QRScanner() {
     getCameraPermissions();
   }, []);
 
-  const handleBarcodeScanned = ({ type, data }: { type: string; data: string }) => {
+  const handleBarcodeScanned = ({
+    type,
+    data,
+  }: {
+    type: string;
+    data: string;
+  }) => {
     setScanned(true);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
@@ -23,6 +29,7 @@ export default function QRScanner() {
   if (hasPermission === null) {
     return <Text>Requesting for camera permission</Text>;
   }
+  
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
@@ -37,7 +44,10 @@ export default function QRScanner() {
         style={StyleSheet.absoluteFillObject}
       />
       {scanned && (
-        <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
+        <Button
+          title={"Tap to Scan Again"}
+          onPress={() => setScanned(false)}
+        />
       )}
     </View>
   );
@@ -48,5 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
+    paddingHorizontal: 60,
+    paddingVertical: 20,
   },
 });
